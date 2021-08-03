@@ -5,7 +5,7 @@
 -optimizationpasses 5
 -allowaccessmodification
 -dontusemixedcaseclassnames
--repackageclasses ru.nikitenkogleb.transactional
+-repackageclasses ru.nikitenkogleb.tkvs
 -verbose
 
 #-printmapping 'mapping.txt'

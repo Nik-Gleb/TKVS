@@ -29,6 +29,7 @@
   package="ru.nikitenkogleb.tkvs">
 
   <application
+    android:name=".Application"
     android:icon="@mipmap/ic_launcher"
     android:label="TKVS"
     android:roundIcon="@mipmap/ic_launcher"

@@ -47,8 +47,8 @@ class Activity : AppCompatActivity(R.layout.activity) {
 
     super.onCreate(state)
 
-    // Создём хранилище на базе ConcurrentHasMap и контрактом командной строки
-    val storage = StorageAPI.concurrentMap().cli()
+    // Получаем хранилище для обработки ввода
+    val storage = application.getSystemService(StorageCLI::class.java)
 
     // ViewBinding
     with(ActivityBinding.bind(findViewById(R.id.content))) {
@@ -60,8 +60,8 @@ class Activity : AppCompatActivity(R.layout.activity) {
         if (!input.text.isNullOrBlank()) {
 
           // Чистим лишние пробелы и сегментируем по словам
-          val inp = input.text.toString().replace("\\s+", " ")
-          val args = inp.split(' ').toTypedArray()
+          val inp = input.text.toString().replace("\\s+".toRegex(), " ")
+          val args = inp.trim().split("\\s+".toRegex()).toTypedArray()
 
           // Выполнение команды на storage и форматирование результата
           val out = "$inp:\t" + storage.exec(*args) + "\n"

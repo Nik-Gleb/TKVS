@@ -66,7 +66,7 @@ android {
     defaultConfig.minSdkVersion project.minSdk
     defaultConfig.multiDexEnabled false
 
-    //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    defaultConfig.testInstrumentationRunner "ru.nikitenkogleb.tkvs.MockJUnitRunner"
 
     dexOptions.javaMaxHeapSize "8G"
     dexOptions.maxProcessCount 8
@@ -85,6 +85,8 @@ android {
     lintOptions.abortOnError true
     aaptOptions.additionalParameters '--enable-sparse-encoding'
     sourceSets.main.root = "."
+    sourceSets.test.java.srcDirs        = ['tests/jvm']
+    sourceSets.androidTest.java.srcDirs = ['tests/android']
 
     testOptions {
         unitTests.returnDefaultValues = true
@@ -97,24 +99,28 @@ android {
             storeFile file("keystore.jks")
             v1SigningEnabled true
             v2SigningEnabled true
-            storePassword "GuVg98Em"//System.getProperty("store")
+            storePassword System.getProperty("store")
             keyAlias project.properties['appId']
-            keyPassword "9bQR7dBd"//System.getProperty("key")
+            keyPassword System.getProperty("key")
         }
     }
 
     buildTypes {
         debug { debuggable true; shrinkResources false; minifyEnabled false }
         release {
-            debuggable true; shrinkResources true; minifyEnabled true
+            debuggable false; shrinkResources true; minifyEnabled true
             proguardFiles 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
 }
 
-// Единственная внешняя библиотека в проекте
-dependencies { implementation 'com.google.android.material:material:1.4.0' }
+dependencies {
+    implementation 'com.google.android.material:material:1.4.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
 
 // ==================================== Shrink optimizations ===========================================
 task fix_aapt_rules(type: Delete) {
