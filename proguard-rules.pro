@@ -33,3 +33,4 @@
 
 -keep class ru.nikitenkogleb.tkvs.Activity { <init>(...); }
 -keep class ru.nikitenkogleb.tkvs.Input { <init>(...); }
+-keep class ru.nikitenkogleb.tkvs.Application { <init>(...); }
